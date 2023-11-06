@@ -1,0 +1,48 @@
+{
+  "name": "job_api_lambda",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lambda.js",
+  "scripts": {
+    "start-dependencies": "docker compose up -d",
+    "init-dependencies": "npm run start-dependencies && ./init-dependencies.sh",
+    "start": "ts-node index.local.ts",
+    "start-build": "NODE_ENV=test node ./build/lambda.js",
+    "dev": "npm run start-dependencies && NODE_ENV=dev TABLE_NAME=job-table NODE_APP_INSTANCE=local nodemon index.local.ts",
+    "build": "tsc && cp -R *.json build/ && cd build && npm ci --omit=dev --cache .npm --prefer-offline && cd ..",
+    "build-local": "tsc && cp -R config config *.json node_modules build/",
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix",
+    "test": "jest",
+    "test-coverage": "jest"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.385.0",
+    "@aws-sdk/lib-dynamodb": "^3.385.0",
+    "config": "^3.3.9",
+    "express": "^4.18.2",
+    "joi": "^17.10.1",
+    "reflect-metadata": "^0.1.13",
+    "serverless-http": "^3.2.0",
+    "typedi": "^0.10.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.114",
+    "@types/config": "^3.3.0",
+    "@types/express": "^4.17.17",
+    "@types/jest": "^29.5.0",
+    "@types/node": "^18.15.11",
+    "@types/supertest": "^2.0.15",
+    "jest": "^29.4.2",
+    "nodemon": "^2.0.20",
+    "rimraf": "^5.0.1",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.0.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  },
+  "directories": {
+    "test": "tests"
+  }
+}

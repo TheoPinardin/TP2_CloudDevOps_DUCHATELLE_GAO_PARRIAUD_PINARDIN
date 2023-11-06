@@ -1,0 +1,26 @@
+# IntelliJ
+.idea/
+*.DS_Store
+/.idea/
+
+# Terraform
+*.terraform/
+*.backup
+*.tfstate.d
+*.tfstate
+
+# Packaged lambda source code
+
+/*.zip
+.nyc_output
+build
+coverage
+node_modules
+
+# Mac
+.DS_Store
+.DS_Store?
+
+/terraform/.terraform.lock.hcl
+/TP2_seveless_backend.iml
+/terraform/.terraform.tfstate.lock.info

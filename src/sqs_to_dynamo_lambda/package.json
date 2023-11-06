@@ -1,0 +1,33 @@
+{
+  "name": "sqs-to-dynamo-lambda",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node index.local.ts",
+    "start-build": "NODE_ENV=test node ./build/lambda.js",
+    "dev": "npm run start-dependencies && NODE_ENV=dev NODE_APP_INSTANCE=local nodemon index.local.ts",
+    "build": "tsc && cp -R *.json build/ && cd build && npm ci --omit=dev --cache .npm --prefer-offline && cd ..",
+    "build-local": "tsc && cp -R config config *.json node_modules build/",
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix",
+    "test": "jest",
+    "test-coverage": "jest"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.385.0",
+    "@aws-sdk/lib-dynamodb": "^3.385.0",
+    "typedi": "^0.10.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.114",
+    "@types/jest": "^29.5.0",
+    "@types/node": "^18.15.11",
+    "nodemon": "^2.0.20",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.3"
+  },
+  "directories": {
+    "test": "tests"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "dynamo": {
+    "options": {
+      "endpoint": "http://localhost:8003",
+      "region": "local",
+      "accessKeyId": "dynamo",
+      "secretAccessKey": "dynamo123"
+    }
+  }
+}

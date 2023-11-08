@@ -4,7 +4,7 @@ sqs_to_dynamo_lambda_name = "sqs_to_dynamo_lambda"
 job_api_lambda_name       = "job_api_lambda"
 
 # S3
-s3_user_bucket_name = "job-offers-bucket-tp-esme-serverless-backend"
+s3_user_bucket_name = "job-offers-bucket-tp-esme-serverless-backend-pinardin"
 
 # SQS
 sqs_job_queue_name             = "job-offers-queue"

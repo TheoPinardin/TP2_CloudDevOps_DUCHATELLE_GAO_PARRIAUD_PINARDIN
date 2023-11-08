@@ -52,6 +52,22 @@ resource "aws_lambda_permission" "allow_bucket" {
 
 
 # resource aws_lambda_function sqs_to_dynamo_lambda
+resource "aws_lambda_function" "sqs_to_dynamo_lambda" {
+  function_name = "sqs_to_dynamo_lambda"  # Replace with your desired function name
+  handler = "index.handler"
+  runtime = "nodejs18.x"  # Update the runtime version as needed
+  memory_size = 512
+  timeout = 30
+  filename = data.archive_file.empty_zip_code_lambda.output_path
+
+  environment {
+    variables = {
+      TABLE_NAME = aws_dynamodb_table.job-table.name  # Reference the DynamoDB table name
+    }
+  }
+
+  role = aws_iam_role.sqs_to_dynamo_lambda_role.arn  # Attach the IAM role
+}
 
 
 # resource aws_lambda_permission allow_sqs_queue
@@ -59,7 +75,43 @@ resource "aws_lambda_permission" "allow_bucket" {
 
 # resource aws_lambda_function job_api_lambda
 
+resource "aws_lambda_function" "job_api_lambda" {
+  function_name = "job_api_lambda"  
+  handler = "index.handler"
+  runtime = "nodejs18.x"
+  memory_size = 512
+  timeout = 30
+  filename = data.archive_file.empty_zip_code_lambda.output_path
+
+
+  environment {
+    variables = {
+      TABLE_NAME = aws_dynamodb_table.job-table.name  
+    }
+  }
+
+  role = aws_iam_role.job_api_lambda_role.arn 
+}
+
 
 
 # resource aws_lambda_permission allow_api_gw
 
+resource "aws_iam_policy" "allow_api_gw" {
+  name        = "allow_api_gw"
+  
+  
+  policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "apigateway:POST"  // Add other HTTP methods if needed, e.g., "apigateway:GET"
+            ],
+            "Resource": aws_apigatewayv2_api.job_api_gw.arn
+             }
+    ]
+}
+)
+}
